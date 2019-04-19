@@ -1,0 +1,65 @@
+# get upper case system name
+string(TOUPPER ${CMAKE_SYSTEM_NAME} SYSTEM_NAME_UPPER)
+
+# determine architecture
+set(X64 OFF)
+if(CMAKE_SIZE_OF_VOID_P EQUAL 8)
+    set(X64 ON)
+endif()
+
+# project options
+set(DEFAULT_PROJECT_OPTIONS
+    CXX_STANDARD              17
+    LINKER_LANGUAGE           "CXX"
+    POSITION_INDEPENDENT_CODE ON
+)
+
+# include directories
+set(DEFAULT_INCLUDE_DIRECTORIES)
+
+# libraries
+set(DEFAULT_LIBRARIES)
+
+# compile definitions
+set(DEFAULT_COMPILE_DEFINITIONS
+    SYSTEM_${SYTEM_NAME_UPPER}
+)
+
+# MSVC compiler options
+if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+    set(DEFAULT_COMPILE_DEFINITIONS ${DEFAULT_COMPILE_DEFINITIONS}
+        _SCL_SECURE_NO_WARNINGS
+        _CRT_SECURE_NO_WARNINGS
+    )
+endif()
+
+# Compile options
+
+set(DEFAULT_COMPILE_OPTIONS)
+
+if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+        string(REGEX REPLACE "/w[0-4]" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+ endif()
+
+set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS} 
+    -Wall
+    -Wno-missing-braces
+
+    -std=c++1z
+)
+
+# Linker options
+
+set(DEFAULT_LINKER_OPTIONS)
+
+if(CMAKE_BUILD_TYPE MATCHES Debug)
+    set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
+        -g
+        -O0
+    )
+
+    set(DEFAULT_LINKER_OPTIONS ${DEFAULT_LINKER_OPTIONS}
+        -fprofile-arcs
+        -ftests-coverage
+    )
+endif()
