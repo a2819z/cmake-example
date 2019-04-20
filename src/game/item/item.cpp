@@ -1,3 +1,4 @@
+#include <fmt/core.h>
 #include <game/item/item.hpp>
 #include <iostream>
 
@@ -10,9 +11,9 @@ namespace Game
 
     void Item::describe() const
     {
-        std::cout << "Item name: " << name << '\n'
-                  << "Description: " << description << '\n'
-                  << "Price: " << price << '\n';
+        std::cout << "name: " << name << std::endl
+                  << "description: " << description << std::endl
+                  << "price: " << price << std::endl;
     }
 
     std::string Item::get_name() const
@@ -39,9 +40,9 @@ namespace Game
 
     void Weapon::describe() const
     {
+        std::cout << "Item type: Weapon" << std::endl;
         Item::describe();
-
-        std::cout << "Damage: " << damage << '\n';
+        std::cout << "damage: " << damage << std::endl << std::endl;
     }
 
     Armor::Armor(std::string name, std::string description, unsigned price,
@@ -52,37 +53,25 @@ namespace Game
 
     void Armor::describe() const
     {
+        std::cout << "Item type: Armor" << std::endl;
         Item::describe();
-
-        std::cout << "Defense: " << defense << '\n';
+        std::cout << "Defense: " << defense << std::endl << std::endl;
     }
 
     Potion::Potion(std::string name, std::string description, unsigned price,
-                   Potion_type type, unsigned capacity)
+                   std::string type, unsigned capacity)
         : Item(name, description, price), type(type), capacity(capacity)
     {
     }
 
     void Potion::describe() const
     {
+        std::cout << "Item type: Potion" << std::endl;
         Item::describe();
-
-        std::cout << "Potion type: " << get_potion_type() << '\n'
-                  << "Capacity: " << capacity << '\n';
+        std::cout << "type: " << type << std::endl
+                  << "capacity: " << capacity << std::endl
+                  << std::endl;
     }
 
-    std::string Potion::get_potion_type() const
-    {
-        switch (type) {
-        case Potion_type::HP:
-            return "HP";
-            break;
-        case Potion_type::MP:
-            return "MP";
-            break;
-        default:
-            return "NONE";
-            break;
-        }
-    }
+    std::string Potion::get_potion_type() const { return type; }
 } // namespace Game::Item

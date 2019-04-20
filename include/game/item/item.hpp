@@ -71,10 +71,8 @@ namespace Game
     class Potion : public Item
     {
     public:
-        enum class Potion_type { HP = 0, MP = 1 };
-
         Potion(std::string name, std::string description, unsigned price,
-               Potion_type type, unsigned capacity);
+               std::string type, unsigned capacity);
         Potion(const Potion& other) = default;
         Potion(Potion&& other)      = default;
 
@@ -88,7 +86,7 @@ namespace Game
         std::string get_potion_type() const;
 
     protected:
-        Potion_type type;
+        std::string type;
         unsigned    capacity;
     };
 } // namespace Game

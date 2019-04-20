@@ -3,13 +3,13 @@
 
 #include <game/character/character.hpp>
 #include <game/item/item.hpp>
+#include <iostream>
 #include <json/json.hpp>
-#include <vector>
 #include <memory>
 #include <string>
-#include <iostream>
+#include <vector>
 
-using namespace nlohmann;
+using json = nlohmann::json;
 
 namespace Game
 {
@@ -17,14 +17,14 @@ namespace Game
     class Shop
     {
     public:
-        Shop(std::string shop_name, std::string file);
+        Shop(std::string shop_name, std::string file_name);
         Shop(const Shop& other) = delete;
         Shop(Shop&& other)      = delete;
 
         Shop& operator=(const Shop& other) = delete;
         Shop& operator=(Shop&& other) = delete;
 
-        ~Shop();
+        ~Shop() = default;
 
         void load();
 
@@ -36,9 +36,7 @@ namespace Game
 
     private:
         std::string shop_name;
-
-        std::ifstream file;
-        json          db;
+        std::string file_name;
 
         std::vector<std::shared_ptr<Item>> item_list;
     };

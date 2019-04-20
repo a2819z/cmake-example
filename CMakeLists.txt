@@ -23,6 +23,9 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 include_directories(include)
 include_directories(lib)
 
+# resource path
+set(RESOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/resouce)
+
 # Compile options
 include(cmake/CompileOptions.cmake)
 

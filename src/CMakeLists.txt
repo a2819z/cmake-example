@@ -17,7 +17,7 @@ set(headers
     ${header_dir}/game/character/human.hpp
     ${header_dir}/game/character/orc.hpp
     ${header_dir}/game/item/item.hpp
-    #    ${header_dir}/game/shop/shop.hpp
+    ${header_dir}/game/shop/shop.hpp
     )
 
 set(sources
@@ -26,14 +26,25 @@ set(sources
     game/character/human.cpp
     game/character/orc.cpp
     game/item/item.cpp
-    #game/shop/shop.cpp
+    game/shop/shop.cpp
 )
 
 # build library
 add_library(${target}
             ${headers} ${sources})
 
-# project options
+set_target_properties(${target} PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES)
+
+# resource dir
+target_compile_definitions(${target}
+    PRIVATE
+    RESOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}/../resouce/")
+
+# library link options
+find_package(fmt)
+target_link_libraries(${target} fmt::fmt)
 
 #install
 install(TARGETS ${target} 

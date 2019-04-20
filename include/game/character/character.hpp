@@ -4,7 +4,8 @@
 #include <game/item/item.hpp>
 #include <memory>
 #include <string>
-#include <unordered_map>
+#include <vector>
+#include <utility>
 
 namespace Game
 {
@@ -21,7 +22,7 @@ namespace Game
         ~Character() = default;
 
         int get_gold() const;
-        void set_gold();
+        void set_gold(int set_gold);
 
         void add_inventory(std::shared_ptr<Item> item, std::size_t count);
 
@@ -36,7 +37,7 @@ namespace Game
 
         int gold;
 
-        std::unordered_map<std::string, std::unique_ptr<Item>> inventory;
+        std::vector<std::pair<std::shared_ptr<Item>, std::size_t>> inventory;
     };
 } // namespace Game
 

@@ -4,18 +4,29 @@
 
 namespace Game
 {
+    Character ::Character(std::string name, int HP, int MP, int gold)
+        : name(name), HP(HP), MP(MP), gold(gold)
+    {
+    }
+
     int Character::get_gold() const { return gold; }
 
-    void Character::set_gold() {}
+    void Character::set_gold(int set_gold) { gold = set_gold; }
 
     void Character::add_inventory(std::shared_ptr<Item> item, std::size_t count)
     {
-        auto iter = inventory.find(item->get_name());
+        bool is_found = false;
 
-        if (iter != inventory.end()) {
-            *(iter->second) += count;
-        } else {
-            //inventory.insert({item->get_name(), });
+        for (auto& inventory_item : inventory) {
+            if (inventory_item.first->get_name() == item->get_name()) {
+                inventory_item.second += count;
+                is_found = true;
+                break;
+            }
+        }
+
+        if(!is_found){
+            inventory.emplace_back(std::make_pair(item, count));
         }
     }
 
@@ -28,8 +39,9 @@ namespace Game
 
             std::cout << "Inventory List" << std::endl;
             for (const auto& item : inventory) {
-                std::cout << "No. " << ++index << ": " << item.first << " "
-                          << item.second->get_count() << std::endl;
+                std::cout << "No. " << ++index << std::endl
+                          << "Name: " << item.first->get_name() << " "
+                          << "Amount: " << item.second << std::endl;
             }
         }
     }
